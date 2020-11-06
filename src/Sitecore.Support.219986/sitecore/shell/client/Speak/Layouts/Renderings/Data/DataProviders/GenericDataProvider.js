@@ -120,7 +120,10 @@ define(["sitecore", "baseDataprovider"], function (_sc) {
       // The fix for 219986 bug: display current records count instead of the total one
       if (jsonData.data){
         var dataSet = jsonData.data[Object.keys(jsonData.data)[0]];
-        this.model.set("totalRecordCount", dataSet[Object.keys(dataSet)[0]].length);	  
+          if (this.model.get("totalRecordCount") !== -1)
+              this.model.set("totalRecordCount", dataSet[Object.keys(dataSet)[0]].length + this.model.get("totalRecordCount"));
+          else
+              this.model.set("totalRecordCount", dataSet[Object.keys(dataSet)[0]].length);	  
       }
       else{
         this.model.set("totalRecordCount", jsonData.totalRecordCount);
